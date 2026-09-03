@@ -95,6 +95,28 @@ const sortedTasks = [...filteredTasks].sort((a, b) => {
     </button>
   )}
 </div>
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+  <div className="bg-white rounded-xl shadow-sm p-5 text-center">
+    <p className="text-gray-500 text-sm">Total Tasks</p>
+    <p className="text-3xl font-bold text-gray-800 mt-2">
+      {totalTasks}
+    </p>
+  </div>
+
+  <div className="bg-white rounded-xl shadow-sm p-5 text-center">
+    <p className="text-gray-500 text-sm">Pending</p>
+    <p className="text-3xl font-bold text-yellow-500 mt-2">
+      {pendingTasks}
+    </p>
+  </div>
+
+  <div className="bg-white rounded-xl shadow-sm p-5 text-center">
+    <p className="text-gray-500 text-sm">Completed</p>
+    <p className="text-3xl font-bold text-green-600 mt-2">
+      {completedTasks}
+    </p>
+  </div>
+</div>
 <input
   type="text"
   placeholder="Search tasks..."
