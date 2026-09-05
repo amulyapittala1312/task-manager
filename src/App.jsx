@@ -3,7 +3,7 @@ import Navbar from "./Components/Navbar";
 import TaskForm from "./Components/TaskForm";
 import TaskList from "./Components/TaskList";
 import { TaskProvider,TaskContext } from "./context/TaskContext";
-import {  BrowserRouter, Routes, Route,useParams} from "react-router-dom";
+import {  BrowserRouter, Routes, Route,useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 function TaskDetails({onEdit}) {
   const { id } = useParams();

@@ -10,6 +10,7 @@ function TaskForm({ editingTask, setEditingTask }) {
     priority: "Medium",
     dueDate: "",
   });
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (editingTask) {
@@ -23,16 +24,25 @@ function TaskForm({ editingTask, setEditingTask }) {
   }, [editingTask]);
 
   const handleChange = (e) => {
-    setTask({
-      ...task,
-      [e.target.name]: e.target.value,
-    });
-  };
+  setTask({
+    ...task,
+    [e.target.name]: e.target.value,
+  });
+
+  if (e.target.name === "title") {
+    setError("");
+  }
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!task.title.trim()) return;
+    if (!task.title.trim()) {
+  setError("Task name is required.");
+  return;
+}
+
+setError("");
 
     if (editingTask) {
       dispatch({
@@ -86,6 +96,11 @@ function TaskForm({ editingTask, setEditingTask }) {
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+          {error && (
+  <p className="text-sm text-red-600 mt-2">
+    {error}
+  </p>
+)}
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
