@@ -78,12 +78,20 @@ function TaskCard({ task, onDelete, onEdit, onComplete }) {
           Edit
         </button>
 
-        <button
-          onClick={() => onDelete(task.id)}
-          className="px-3 py-1.5 text-sm font-medium text-red-700 bg-red-50 rounded-lg hover:bg-red-100 transition"
-        >
-          Delete
-        </button>
+       <button
+  onClick={() => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this task?"
+    );
+
+    if (confirmed) {
+      onDelete(task.id);
+    }
+  }}
+  className="px-4 py-2 text-sm font-medium text-red-700 bg-red-100 rounded-lg hover:bg-red-200 transition"
+>
+  Delete
+</button>
       </div>
     </div>
   );

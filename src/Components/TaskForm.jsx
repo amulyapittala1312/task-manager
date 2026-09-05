@@ -10,6 +10,7 @@ function TaskForm({ editingTask, setEditingTask }) {
     priority: "Medium",
     dueDate: "",
   });
+
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -18,44 +19,44 @@ function TaskForm({ editingTask, setEditingTask }) {
         title: editingTask.title,
         description: editingTask.description,
         priority: editingTask.priority,
-        dueDate:editingTask.dueDate || "",
+        dueDate: editingTask.dueDate || "",
       });
     }
   }, [editingTask]);
 
   const handleChange = (e) => {
-  setTask({
-    ...task,
-    [e.target.name]: e.target.value,
-  });
+    setTask({
+      ...task,
+      [e.target.name]: e.target.value,
+    });
 
-  if (e.target.name === "title") {
-    setError("");
-  }
-};
+    if (e.target.name === "title") {
+      setError("");
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!task.title.trim()) {
-  setError("Task name is required.");
-  return;
-}
+      setError("Task name is required.");
+      return;
+    }
 
-setError("");
+    setError("");
 
     if (editingTask) {
       dispatch({
-  type: "UPDATE_TASK",
-  payload: {
-    ...task,
-    id: editingTask.id,
-    status: editingTask.status,
-  },
-});
+        type: "UPDATE_TASK",
+        payload: {
+          ...task,
+          id: editingTask.id,
+          status: editingTask.status,
+        },
+      });
+
       setEditingTask(null);
     } else {
-      // Add new task
       dispatch({
         type: "ADD_TASK",
         payload: {
@@ -69,19 +70,33 @@ setError("");
       title: "",
       description: "",
       priority: "Medium",
-      dueDate:"",
-      
+      dueDate: "",
+    });
+  };
+
+  const handleCancel = () => {
+    setEditingTask(null);
+    setError("");
+
+    setTask({
+      title: "",
+      description: "",
+      priority: "Medium",
+      dueDate: "",
     });
   };
 
   return (
     <div className="max-w-3xl mx-auto mt-10 px-6">
-      <div className="bg-white rounded-2xl shadow-sm p-6">
+      <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6">
+
         <h2 className="text-2xl font-bold text-gray-800 mb-6">
           {editingTask ? "Edit Task" : "Create a Task"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
+
+          {/* Task Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Task Name
@@ -93,15 +108,17 @@ setError("");
               value={task.title}
               onChange={handleChange}
               placeholder="Enter task name"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
-          </div>
-          {error && (
-  <p className="text-sm text-red-600 mt-2">
-    {error}
-  </p>
-)}
 
+            {error && (
+              <p className="text-sm text-red-600 mt-2">
+                {error}
+              </p>
+            )}
+          </div>
+
+          {/* Description */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Description
@@ -113,10 +130,11 @@ setError("");
               onChange={handleChange}
               placeholder="Enter task description"
               rows="3"
-              className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             />
           </div>
 
+          {/* Priority */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Priority
@@ -126,33 +144,48 @@ setError("");
               name="priority"
               value={task.priority}
               onChange={handleChange}
-              className="w-full border border-gray-300 rounded-lg px-4 py-3"
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
             >
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
           </div>
+
+          {/* Due Date */}
           <div>
-  <label className="block text-sm font-medium text-gray-700 mb-2">
-    Due Date
-  </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Due Date
+            </label>
 
-  <input
-    type="date"
-    name="dueDate"
-    value={task.dueDate}
-    onChange={handleChange}
-    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-  />
-</div>
+            <input
+              type="date"
+              name="dueDate"
+              value={task.dueDate}
+              onChange={handleChange}
+              className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+            />
+          </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
           >
             {editingTask ? "Update Task" : "Add Task"}
           </button>
+
+          {/* Cancel Button */}
+          {editingTask && (
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
+            >
+              Cancel
+            </button>
+          )}
+
         </form>
       </div>
     </div>
