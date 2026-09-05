@@ -1,21 +1,34 @@
+import { useNavigate } from "react-router-dom";
 function TaskCard({ task, onDelete, onEdit, onComplete }) {
+  const navigate = useNavigate();
+  const isOverdue =
+  task.dueDate &&
+  task.status !== "Completed" &&
+  new Date(task.dueDate) < new Date();
   return (
     <div className="bg-white rounded-2xl shadow-sm border p-5">
       <div className="flex items-start justify-between gap-4">
         <div>
           <h3
-            className={`text-lg font-bold ${
-              task.status === "Completed"
-                ? "text-gray-400 line-through"
-                : "text-gray-800"
-            }`}
-          >
-            {task.title}
-          </h3>
-
-          <p className="text-gray-500 mt-2">
-            {task.description}
-          </p>
+  onClick={() => navigate(`/tasks/${task.id}`)}
+  className={`text-lg font-bold cursor-pointer ${
+    task.status === "Completed"
+      ? "text-gray-400 line-through"
+      : "text-gray-800"
+  }`}
+>
+  {task.title}
+</h3>
+          {task.dueDate && (
+  <p className="text-sm text-gray-500 mt-2">
+    🗓️ Due: {task.dueDate}
+  </p>
+)}
+{isOverdue && (
+  <p className="text-sm text-red-600 font-semibold mt-1">
+    ⚠️ Overdue
+  </p>
+)}
         </div>
 
         <div className="flex flex-col items-end gap-2">

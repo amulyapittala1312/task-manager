@@ -8,6 +8,7 @@ function TaskForm({ editingTask, setEditingTask }) {
     title: "",
     description: "",
     priority: "Medium",
+    dueDate: "",
   });
 
   useEffect(() => {
@@ -16,6 +17,7 @@ function TaskForm({ editingTask, setEditingTask }) {
         title: editingTask.title,
         description: editingTask.description,
         priority: editingTask.priority,
+        dueDate:editingTask.dueDate || "",
       });
     }
   }, [editingTask]);
@@ -57,6 +59,8 @@ function TaskForm({ editingTask, setEditingTask }) {
       title: "",
       description: "",
       priority: "Medium",
+      dueDate:"",
+      
     });
   };
 
@@ -114,6 +118,19 @@ function TaskForm({ editingTask, setEditingTask }) {
               <option value="High">High</option>
             </select>
           </div>
+          <div>
+  <label className="block text-sm font-medium text-gray-700 mb-2">
+    Due Date
+  </label>
+
+  <input
+    type="date"
+    name="dueDate"
+    value={task.dueDate}
+    onChange={handleChange}
+    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+</div>
 
           <button
             type="submit"
